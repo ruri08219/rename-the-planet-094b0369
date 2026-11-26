@@ -16,10 +16,19 @@ ENTRY = (
     "your deposit."
 )
 
+# Planets of our solar system: the entry must name one of them, so a
+# typo that renames something else fails loudly instead of shipping.
+PLANETS = (
+    "Mercury", "Venus", "Earth", "Mars",
+    "Jupiter", "Saturn", "Uranus", "Neptune",
+)
+
 OUTPUT_DIR = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
 
 # The gate takes 1-200 UTF-8 characters, not only whitespace.
 assert 1 <= len(ENTRY) <= 200 and ENTRY.strip(), "entry outside the gate"
+assert any(p in ENTRY for p in PLANETS), "entry names no solar-system planet"
+assert "just to keep" in ENTRY, "entry gives a name with no why"
 
 out = Path(OUTPUT_DIR) / "entry.txt"
 out.parent.mkdir(parents=True, exist_ok=True)
